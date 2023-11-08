@@ -21,10 +21,29 @@ Custom API to convert **XLSX** files into **JSON format**.
 | range     | NO       | String | BODY | `A1:J10`                                       | Sheet range of data. If not provided, gets all data by default         |
 
 
+### Curl example
+Request
+```
+curl --location 'localhost:3000/api/xlsx/upload' \
+--form 'xlsxFile=@"/C:/Users/nguen.d/Downloads/TestSheet_1.xlsx"' \
+--form 'id="34dg57fd"' \
+--form 'sheetName="info"' \
+--form 'range="B2:Z5"'
+```
+
+Response
+---
+```
+{
+    "fileName": "34dg57fd"
+}
+```
+
 
 ## <a id="getJson"></a> api/xlsx/jsonContent/`:fileId`
 
-| Parameter | Required | Value  | Type | Example  | Description    |
-| --------- | -------- | ------ | ---- | -------- | -------------- |
-| fileId    | YES      | String | Path | `123454` | Id of the JSON |
+| Parameter | Required | Value  | Type  | Example  | Description                                                                                                          |
+| --------- | -------- | ------ | ----- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| fileId    | YES      | String | Path  | `123454` | Id of the JSON                                                                                                       |
+| parsed    | NO       | String | query | `1`      | It's 0 by default. The JSON response will be in BrityBOT table format. Otherwise it will return table as a 2D Array. |
 

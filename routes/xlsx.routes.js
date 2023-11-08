@@ -61,17 +61,21 @@ router.post("/xlsx/upload", upload.single("xlsxFile"), (req, res) => {
 // Endpoint to access the JSON content of the uploaded XLSX file
 // /api/xlsx/jsonContent/:fileId
 router.get("/xlsx/jsonContent/:fileId", (req, res) => {
+  const { parsed } = req.query
   const fileId = req.params.fileId;
   const jsonFilePath = path.join(__dirname, "jsondata", `${fileId}.json`);
 
+  
   jsonfile.readFile(jsonFilePath, (err, jsonData) => {
     if (err) {
       return res.status(404).send("JSON file not found.");
     }
+    
+    if (Number(parsed) === 1) {
+      return res.status(200).json(dataArrayToJson(jsonData.sheetContent, 5, 'hi'));
+    }
 
-    res.status(200).json(dataArrayToJson(jsonData.sheetContent, 5, 'hi'));
-
-    // res.status(200).json(jsonData);
+    res.status(200).json(jsonData);
   });
 });
 
