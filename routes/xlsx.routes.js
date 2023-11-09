@@ -38,7 +38,7 @@ router.post("/xlsx/upload", upload.single("xlsxFile"), (req, res) => {
     }
 
     // Generate a unique filename for the JSON file
-    const fileId = Date.now().toString();
+    const fileId = id || Date.now().toString();
     const jsonFilePath = path.join(__dirname, JSON_DIR_NAME, `${fileId}.json`);
 
     // Save the JSON data to the file
