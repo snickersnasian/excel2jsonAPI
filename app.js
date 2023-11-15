@@ -14,7 +14,7 @@ app.get('*', (req, res) => {
   res.status(200).json({
     route: req.url,
     api: 'Excel2JSON',
-    abailable: true,
+    available: true,
   });
 })
 
