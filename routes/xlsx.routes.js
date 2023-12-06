@@ -13,7 +13,7 @@ router.post("/xlsx/upload", upload.single("xlsxFile"), (req, res) => {
   const { id, range, sheetName } = req.body;
   const uploadedFile = req.file;
 
-
+  console.log(uploadedFile);
   // const decodedRange = range && xlsx.utils.decode_range(range.toUpperCase());
 
   if (!uploadedFile) {
@@ -61,8 +61,8 @@ router.post("/xlsx/upload", upload.single("xlsxFile"), (req, res) => {
 // Endpoint to access the JSON content of the uploaded XLSX file
 // /api/xlsx/jsonContent/:fileId
 router.get("/xlsx/jsonContent/:fileId", (req, res) => {
-  const { parsed } = req.query
   const fileId = req.params.fileId;
+  const { parsed } = req.query
   const jsonFilePath = path.join(__dirname, "jsondata", `${fileId}.json`);
 
   
