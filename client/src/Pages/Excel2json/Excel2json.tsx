@@ -29,7 +29,7 @@ export const Excel2json = () => {
 		api.error({
 			message: title,
 			description:
-				"The file is likely to be decrypted.",
+				"The file is probably encrypted.",
 			placement,
 		});
 	};
