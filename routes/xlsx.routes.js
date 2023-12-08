@@ -54,7 +54,7 @@ router.post("/xlsx/upload", upload.single("xlsxFile"), (req, res) => {
       });
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Error processing JSON file.");
+    return res.status(500).send("Error processing JSON file. The XLSX is likely to be decrypted.");
   }
 });
 

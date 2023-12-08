@@ -1,8 +1,9 @@
-import { Button, Input, Modal, Spin, Typography } from "antd";
+import { Button, Input, Modal, Spin, Typography, notification } from "antd";
 import { Excel2jsonStore } from "./store";
 import Title from "antd/es/typography/Title";
 import styles from "./style.module.css";
 import useFetch from "../../hooks/useFetch";
+import { NotificationPlacement } from "antd/es/notification/interface";
 const { Text } = Typography;
 
 export const Excel2json = () => {
@@ -20,7 +21,18 @@ export const Excel2json = () => {
 		setRange,
 	} = Excel2jsonStore();
 
-	const { loading, fetcher } = useFetch(`/api/xlsx/upload/`);
+	const { error, loading, fetcher } = useFetch(`/api/xlsx/upload/`);
+
+	const [api, contextHolder] = notification.useNotification();
+
+	const openNotificationError = (placement: NotificationPlacement, title: string) => {
+		api.error({
+			message: title,
+			description:
+				"The file is likely to be decrypted.",
+			placement,
+		});
+	};
 
 	function handleSubmit() {
 		const formHasErrors = validateForm();
@@ -39,11 +51,16 @@ export const Excel2json = () => {
 				method: "POST",
 				body: data,
 			});
+
+      if (error) {
+        openNotificationError("bottomRight", error.message);
+      }
 		}
 	}
 
 	return (
 		<div className={styles.container}>
+			{contextHolder}
 			<Modal
 				title="Uploading file"
 				open={loading}
