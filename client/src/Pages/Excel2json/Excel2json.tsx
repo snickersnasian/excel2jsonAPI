@@ -53,8 +53,10 @@ export const Excel2json = () => {
 			});
 
       if (error) {
-        openNotificationError("bottomRight", error.message);
+        return openNotificationError("bottomRight", error.message);
       }
+
+      alert(data)
 		}
 	}
 
