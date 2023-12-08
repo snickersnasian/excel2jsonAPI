@@ -3,7 +3,7 @@ import type { Nullable } from "../types/generics"
 
  
 export default function useFetch(url: string) {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     const [data, setData] = useState<Nullable<[key: string]>>(null)
 
