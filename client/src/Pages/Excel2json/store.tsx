@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { Nullable } from '../../types/generics'
 import { validateLength } from './helpers/validateLength';
 
@@ -13,16 +13,14 @@ export const Excel2jsonStore = () => {
 
     const [idValid, setIdValidity] = useState<Nullable<boolean>>(true);
     const [hasXlsxFile, setXlsxFileAvailability] = useState<Nullable<boolean>>(true);
-    const [formHasErrors, setFormHasErrors] = useState<Nullable<boolean>>(false);
 
     function validateForm() {
         setIdValidity(id ? validateLength(id, ID_MIN_LENGTH) : false)
         setXlsxFileAvailability(Boolean(xlsxFilePath))
+
+        return (!idValid || !xlsxFilePath)
     }
 
-    useEffect(() => {
-        setFormHasErrors(!idValid || !xlsxFilePath)
-    }, [idValid, xlsxFilePath])
 
     return {
         xlsxFilePath,
@@ -30,7 +28,6 @@ export const Excel2jsonStore = () => {
         sheetName,
         range,
         idValid,
-        formHasErrors,
         hasXlsxFile,
 
 

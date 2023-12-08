@@ -3,7 +3,6 @@ import { Excel2jsonStore } from "./store";
 import Title from "antd/es/typography/Title";
 import styles from "./style.module.css";
 import useFetch from "../../hooks/useFetch";
-
 const { Text } = Typography;
 
 export const Excel2json = () => {
@@ -13,9 +12,7 @@ export const Excel2json = () => {
 		sheetName,
 		range,
 		idValid,
-		formHasErrors,
 		hasXlsxFile,
-
 		setXlsxFilePath,
 		validateForm,
 		setId,
@@ -23,32 +20,26 @@ export const Excel2json = () => {
 		setRange,
 	} = Excel2jsonStore();
 
-	const { loading, data, fetcher } = useFetch(`/api/xlsx/upload/`);
+	const { loading, fetcher } = useFetch(`/api/xlsx/upload/`);
 
 	function handleSubmit() {
-		console.log({
-			xlsxFilePath,
-			sheetName,
-			range,
-			id,
-		});
+		const formHasErrors = validateForm();
 
-		validateForm();
+		if (!formHasErrors) {
+			const data = new FormData();
 
-		if (formHasErrors) {
-			return;
+			xlsxFilePath && data.append("xlsxFile", xlsxFilePath);
+
+			id && data.append("id", id);
+
+			sheetName && data.append("sheetName", sheetName);
+			range && data.append("range", range);
+
+			fetcher({
+				method: "POST",
+				body: data,
+			});
 		}
-
-		const data = new FormData();
-
-		xlsxFilePath && data.append("xlsxFile", xlsxFilePath);
-
-		id && data.append("id", id);
-
-		fetcher({
-			method: "POST",
-			body: data,
-		});
 	}
 
 	return (
@@ -89,8 +80,10 @@ export const Excel2json = () => {
 					placeholder="File ID"
 					onChange={(elem) => setId(elem.target.value)}
 				/>
-        {!idValid && (
-					<Text type="danger">ID has to be at least 6 characters long</Text>
+				{!idValid && (
+					<Text type="danger">
+						ID has to be at least 6 characters long
+					</Text>
 				)}
 			</div>
 
