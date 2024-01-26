@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const { router: xlsxRouter } = require("./routes/xlsx.routes");
+const { router: txtRouter } = require("./routes/txt.routes");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -9,6 +10,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 
 app.use('/api', xlsxRouter)
+app.use('/api', txtRouter)
 
 app.get('*', (req, res) => {
   res.status(200).json({
