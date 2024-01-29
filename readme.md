@@ -62,7 +62,7 @@ curl --location 'localhost:3000/api/xlsx/upload' \
 }
 ```
 
-## <a id="uploadTxt"></a> api/xlsx/upload
+## <a id="uploadTxt"></a> api/txt/upload
 
 | Parameter | Required | Value  | Type | Example                                         | Description                                                            |
 | --------- | -------- | ------ | ---- | ----------------------------------------------- | ---------------------------------------------------------------------- |
